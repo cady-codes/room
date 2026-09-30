@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Caden Padua · Video Editor</title>
+  <meta name="description" content="Caden Padua is a video editor for UGC ads, short-form reels and long-form YouTube. Walk around his room and click the monitor to see his work.">
+  <meta property="og:title" content="Caden Padua · Video Editor">
+  <meta property="og:description" content="Let’s make videos together.">
+  <meta property="og:image" content="https://cady-codes.github.io/room/img/og.jpg">
+  <meta property="og:url" content="https://cady-codes.github.io/room/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#1a1511">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c27b36'/><path d='M12 9.5v13l10-6.5z' fill='%23fff'/></svg>">
+  <link rel="stylesheet" href="css/style.css?v=8">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="loader" class="loader" role="status" aria-live="polite">
+    <div class="loader-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></div>
+    <p class="loader-title">Setting up the room<span id="loader-pct"></span></p>
+    <p class="loader-tip">Tip: view on desktop for the best experience!</p>
+  </div>
+
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <header class="hud">
+    <button type="button" class="brand" data-go="home" aria-label="Caden Padua, video editor. Back to the room">
+      <strong>Caden Padua</strong><span>Video Editor</span>
+    </button>
+    <nav class="hud-links" aria-label="Contact">
+      <span class="hud-label">Contact me:</span>
+      <a class="icon" id="hud-ig" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="icon" id="hud-mail" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <nav class="dock" aria-label="Sections">
+    <button type="button" data-go="work">My work</button>
+    <button type="button" data-go="about">About me</button>
+    <button type="button" data-go="contact">Contact</button>
+  </nav>
+
+  <p class="hint" id="hint">Drag to look around · click the monitor, laptop or poster</p>
+
+  <button type="button" class="back" id="back" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    Back to room
+  </button>
+
+  <!-- Monitor: my work -->
+  <section class="screen screen-work" id="screen-work" role="dialog" aria-modal="false" aria-label="My work" hidden>
+    <div class="desktop">
+      <div class="window">
+        <div class="titlebar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="wtitle">My Work</span>
+        </div>
+        <div class="win-body">
+          <div class="tabs" role="tablist" aria-label="Portfolio sections" id="work-tabs"></div>
+          <p class="blurb" id="work-blurb"></p>
+          <div class="grid" id="work-grid"></div>
+          <div class="player" id="work-player" hidden>
+            <div class="player-bar">
+              <button type="button" class="pill" id="player-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                All videos
+              </button>
+              <div class="player-title"><strong id="player-title"></strong><span id="player-meta"></span></div>
+              <div class="player-nav">
+                <button type="button" class="pill round" id="player-prev" aria-label="Previous video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button type="button" class="pill round" id="player-next" aria-label="Next video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              </div>
+            </div>
+            <div class="player-stage" id="player-stage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Laptop: about me -->
+  <section class="screen screen-about" id="screen-about" role="dialog" aria-modal="false" aria-label="About me" hidden>
+    <div class="desktop">
+      <div class="window about">
+        <div class="titlebar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="wtitle">About Me</span>
+        </div>
+        <div class="win-body about-body">
+          <img class="about-photo" id="about-photo" alt="Caden Padua">
+          <div class="about-text">
+            <p class="eyebrow">Hi, I’m</p>
+            <h2 id="about-name"></h2>
+            <p class="about-role" id="about-role"></p>
+            <p>I edit UGC ads, short-form reels and long-form YouTube videos for creators and brands. I care about the hook, the pacing and every cut in between.</p>
+            <ul class="stats">
+              <li><strong id="about-views"></strong><span>views on edits shown here</span></li>
+              <li><strong>22</strong><span>featured edits</span></li>
+              <li><strong>4</strong><span>creators &amp; brands</span></li>
+            </ul>
+            <p class="clients">Brick · Captions · Rembert Montald · Kristian Nee</p>
+            <div class="about-actions">
+              <button type="button" class="btn primary" data-go="work">See my work</button>
+              <button type="button" class="btn" data-go="contact">Contact me</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poster: contact -->
+  <section class="screen screen-contact" id="screen-contact" role="dialog" aria-modal="false" aria-label="Contact" hidden>
+    <div class="poster-card">
+      <p class="poster-head">Stop<br>panicking</p>
+      <p class="poster-sub">Need an editor? Let’s make videos together.</p>
+      <div class="poster-actions">
+        <a class="btn primary" id="contact-mail">Email me</a>
+        <button type="button" class="btn" id="contact-copy">Copy email</button>
+        <a class="btn" id="contact-ig" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="poster-email" id="contact-email"></p>
+      <p class="poster-foot">Every<br>thing<br>will be<br>fine</p>
+    </div>
+  </section>
+
+  <div class="tooltip" id="tooltip" aria-hidden="true"></div>
+
+  <div class="fallback" id="fallback" hidden>
+    <p>Your browser couldn’t load the 3D room.</p>
+    <a id="fallback-link">See my portfolio</a>
+  </div>
+
+  <script type="module" src="js/main.js?v=8"></script>
+</body>
+</html>
