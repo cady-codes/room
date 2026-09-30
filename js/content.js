@@ -65,3 +65,13 @@ export const SECTIONS = [
 
 // Sum of the public view counts listed above (Brick ads have no public count).
 export const TOTAL_VIEWS = '900K+';
+
+// Background music (top-left player). Loops; never autoplays, only starts when the visitor presses play.
+export const MUSIC = {
+  src: 'audio/le-festin.mp3',
+  url: 'https://open.spotify.com/track/2yIDWbt3DB2BWtUsIsnwA4',
+  title: 'Le Festin',
+  artist: 'Pianaura · Piano Version',
+  cover: 'img/cover-le-festin.jpg',
+  volume: 0.25, // starts quiet; the site always opens paused
+};

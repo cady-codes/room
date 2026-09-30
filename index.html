@@ -12,7 +12,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#1a1511">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c27b36'/><path d='M12 9.5v13l10-6.5z' fill='%23fff'/></svg>">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=14">
   <script type="importmap">
     {
       "imports": {
@@ -32,9 +32,41 @@
   <canvas id="scene" aria-hidden="true"></canvas>
 
   <header class="hud">
-    <button type="button" class="brand" data-go="home" aria-label="Caden Padua, video editor. Back to the room">
-      <strong>Caden Padua</strong><span>Video Editor</span>
-    </button>
+    <div class="hud-left">
+      <button type="button" class="brand" data-go="home" aria-label="Caden Padua, video editor. Back to the room">
+        <strong>Caden Padua</strong><span>Video Editor</span>
+      </button>
+
+      <!-- Music player -->
+      <section class="music" id="music" aria-label="Music player">
+        <div class="music-top">
+          <img class="music-cover" id="music-cover" alt="" width="48" height="48">
+          <a class="music-info" id="music-link" target="_blank" rel="noopener" title="Open in Spotify">
+            <strong id="music-title"></strong>
+            <span id="music-artist"></span>
+          </a>
+          <div class="music-controls">
+            <button type="button" class="mbtn" id="music-restart" aria-label="Restart song">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM19 6.2v11.6a.8.8 0 0 1-1.25.66L10 12.66a.8.8 0 0 1 0-1.32l7.75-5.8A.8.8 0 0 1 19 6.2z"/></svg>
+            </button>
+            <button type="button" class="mbtn mbtn-play" id="music-play" aria-label="Play music">
+              <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.6v12.8a.8.8 0 0 0 1.2.68l10.2-6.4a.8.8 0 0 0 0-1.36L9.2 4.92A.8.8 0 0 0 8 5.6z"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.8" height="14" rx="1"/><rect x="13.7" y="5" width="3.8" height="14" rx="1"/></svg>
+            </button>
+            <button type="button" class="mbtn" id="music-mute" aria-label="Mute">
+              <svg class="i-vol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+              <svg class="i-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+            </button>
+            <input type="range" id="music-vol" min="0" max="1" step="0.01" aria-label="Volume">
+          </div>
+        </div>
+        <div class="music-progress">
+          <span id="music-cur">0:00</span>
+          <input type="range" id="music-bar" min="0" max="1000" value="0" step="1" aria-label="Seek">
+          <span id="music-dur">0:00</span>
+        </div>
+      </section>
+    </div>
     <nav class="hud-links" aria-label="Contact">
       <span class="hud-label">Contact me:</span>
       <a class="icon" id="hud-ig" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
@@ -143,6 +175,6 @@
     <a id="fallback-link">See my portfolio</a>
   </div>
 
-  <script type="module" src="js/main.js?v=8"></script>
+  <script type="module" src="js/main.js?v=14"></script>
 </body>
 </html>

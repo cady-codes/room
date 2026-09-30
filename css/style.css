@@ -101,6 +101,46 @@ body.moved .hint { opacity: 0; }
 .fallback { position: fixed; inset: 0; z-index: 60; display: grid; place-content: center; gap: 10px; text-align: center; background: var(--bg); }
 .fallback a { color: var(--accent); font-weight: 600; }
 
+/* ---------- music player (top-left, like rachelqrwei.ca) ---------- */
+.hud { align-items: flex-start; }
+.hud-left { display: grid; gap: 10px; }
+.brand { display: none; }
+body.portrait .brand { display: grid; }
+.music { width: 384px; display: grid; gap: 8px; }
+.music-top { display: flex; align-items: center; gap: 12px; }
+.music-cover { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; flex: none; box-shadow: 0 4px 14px rgba(0, 0, 0, .35); }
+.music-info { flex: 1; min-width: 0; display: grid; gap: 1px; text-decoration: none; }
+.music-info:hover strong { color: var(--accent); }
+.music-info strong { font-size: 14px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-info span { font-size: 12.5px; color: var(--cream-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-controls { display: flex; align-items: center; gap: 2px; }
+.mbtn { width: 32px; height: 32px; display: grid; place-items: center; border: 0; background: none; border-radius: 50%; color: var(--cream); padding: 0; transition: background .2s, color .2s, transform .2s; }
+.mbtn svg { width: 17px; height: 17px; }
+.mbtn:hover { color: var(--accent); background: rgba(255, 255, 255, .08); }
+.mbtn-play { width: 36px; height: 36px; background: var(--cream); color: #1a1511; }
+.mbtn-play:hover { background: var(--accent); color: #1a1511; transform: scale(1.06); }
+.mbtn-play svg { width: 16px; height: 16px; }
+.mbtn .i-pause, .music.playing .mbtn .i-play, .mbtn .i-mute, .music.muted .mbtn .i-vol { display: none; }
+.music.muted .mbtn .i-mute { display: block; }
+.music.playing .mbtn .i-pause { display: block; }
+.music.loading .mbtn-play { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
+.music-progress { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--cream-dim); font-variant-numeric: tabular-nums; }
+.music-progress span { width: 30px; }
+.music-progress span:last-child { text-align: right; }
+#music-bar, #music-vol {
+  --p: 0%; flex: 1; height: 4px; margin: 0; appearance: none; -webkit-appearance: none; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(to right, var(--cream) var(--p), rgba(255, 255, 255, .18) var(--p));
+}
+#music-vol { flex: none; width: 58px; margin-left: 2px; --p: 50%; }
+#music-bar::-webkit-slider-thumb, #music-vol::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--cream); border: 0; opacity: 0; transition: opacity .2s; }
+#music-bar::-moz-range-thumb, #music-vol::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--cream); border: 0; }
+.music:hover #music-bar::-webkit-slider-thumb, .music:hover #music-vol::-webkit-slider-thumb, #music-bar:focus-visible::-webkit-slider-thumb, #music-vol:focus-visible::-webkit-slider-thumb { opacity: 1; }
+body.portrait .music { width: auto; max-width: 250px; gap: 0; padding: 6px 8px 6px 6px; border-radius: 14px; background: rgba(30, 24, 19, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+body.portrait .music-cover { width: 36px; height: 36px; }
+body.portrait .music-progress, body.portrait #music-restart, body.portrait #music-vol, body.portrait #music-mute { display: none; }
+body.focused.portrait .music { opacity: 0; pointer-events: none; }
+
 /* ---------- screens (HTML placed over the monitor / laptop / poster) ---------- */
 .screen {
   position: fixed; z-index: 25; left: 0; top: 0; width: 100px; height: 100px;

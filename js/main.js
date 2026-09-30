@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { PROFILE, SECTIONS, TOTAL_VIEWS, MEDIA_BASE } from './content.js';
+import { PROFILE, SECTIONS, TOTAL_VIEWS, MEDIA_BASE } from './content.js?v=14';
+import { initMusic, pauseMusic } from './music.js?v=14';
 
 const $ = (s) => document.querySelector(s);
 const body = document.body;
@@ -33,6 +34,8 @@ function showFallback() {
   $('#fallback').hidden = false;
   $('#loader').classList.add('done');
 }
+
+initMusic();
 
 // ------------------------------------------------------------------ renderer / scene
 const canvas = $('#scene');
@@ -85,8 +88,10 @@ function homePosition() {
 const menuParts = [];
 function applyLayout() {
   const show = !isPortrait();
+  body.classList.toggle('portrait', !show);
   for (const o of menuParts) o.visible = show;
 }
+applyLayout();
 function syncMaxDistance() {
   controls.maxDistance = Math.max(17, homeDistance() * 1.25);
 }
@@ -453,6 +458,7 @@ function openPlayer(j) {
   const it = s.items[j];
   playing = j;
   stopReel();
+  pauseMusic(); // don't talk over the edit
   $('#player-title').textContent = it.title;
   $('#player-meta').textContent = it.meta;
   if (s.kind === 'youtube') {
